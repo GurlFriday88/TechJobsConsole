@@ -73,10 +73,14 @@ namespace TechJobsConsole
                     if (aValue.Contains(searchTerm))
                     {
                         result.Add(jobListing);
+                        break;
+                       
                     }
-                    
+                   
+
 
                 }
+               
             }
 
             return result;
