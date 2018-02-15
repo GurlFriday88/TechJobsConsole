@@ -70,14 +70,34 @@ namespace TechJobsConsole
                     {
                        
                         searchResults = JobData.FindByValue(searchTerm);
-                        PrintJobs(searchResults);
+
+
+
+                        if (searchResults.Count == 0)
+                        {
+                            Console.WriteLine("Search did not find anything. Try again.");
+                        }
+                        else
+                        {
+                            PrintJobs(searchResults);
+                        }
+                       
                        
                         
                     }
                     else
                     {
                         searchResults = JobData.FindByColumnAndValue(columnChoice, searchTerm);
-                        PrintJobs(searchResults);
+
+                        if (searchResults.Count == 0)
+                        {
+                            Console.WriteLine("\n Search did not find anything. Try again.");
+                        }
+                        else
+                        {
+                            PrintJobs(searchResults);
+                        }
+                        
                     }
                 }
             }
