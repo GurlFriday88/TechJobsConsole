@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace TechJobsConsole
 {
@@ -10,6 +11,7 @@ namespace TechJobsConsole
             // Create two Dictionary vars to hold info for menu and data
 
             // Top-level menu options
+
             Dictionary<string, string> actionChoices = new Dictionary<string, string>();
             actionChoices.Add("search", "Search");
             actionChoices.Add("list", "List");
@@ -56,14 +58,21 @@ namespace TechJobsConsole
 
                     // What is their search term?
                     Console.WriteLine("\nSearch term: ");
-                    string searchTerm = Console.ReadLine();
+                    
+                    TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+                    string searchTerm = textInfo.ToTitleCase(Console.ReadLine().ToLower());
 
                     List<Dictionary<string, string>> searchResults;
+
 
                     // Fetch results
                     if (columnChoice.Equals("all"))
                     {
-                        Console.WriteLine("Search all fields not yet implemented.");
+                       
+                        searchResults = JobData.FindByValue(searchTerm);
+                        PrintJobs(searchResults);
+                       
+                        
                     }
                     else
                     {
@@ -102,7 +111,7 @@ namespace TechJobsConsole
                 string input = Console.ReadLine();
                 choiceIdx = int.Parse(input);
 
-                if (choiceIdx < 0 || choiceIdx >= choiceKeys.Length)
+                if (choiceIdx < 0 || choiceIdx >= choiceKeys.Length) //boundary for the choice index covers the outer ranges 
                 {
                     Console.WriteLine("Invalid choices. Try again.");
                 }
@@ -118,7 +127,40 @@ namespace TechJobsConsole
 
         private static void PrintJobs(List<Dictionary<string, string>> someJobs)
         {
-            Console.WriteLine("printJobs is not implemented yet");
+            //iterate over every job in all jobs
+            foreach (Dictionary<string, string> job in someJobs)
+            {
+
+                //on every job iterate over its key value pairs 
+                foreach (KeyValuePair<string, string> row in job)
+                {
+
+
+
+                    Console.WriteLine(row.Key + ": " + row.Value);
+
+                }
+
+                Console.WriteLine("\n******");
+
+            }
+
+
+
         }
+
+        
     }
 }
+
+
+
+
+
+
+
+
+//create a list dictionary to hold the found job
+//iterate over the job data and for every job listed make a variable to hold the Key column
+//check if that column contains the value matching the search term 
+// if it matched then add that 
